@@ -12,6 +12,9 @@
 .mCS_destroyed .mCSB_container.mCS_no_scrollbar{
 	margin-right:30px;
 }
+.mCustomScrollBox {
+  overflow: hidden;
+}
 .mCustomScrollBox .mCSB_scrollTools{
 	width:16px;
 	height:100%;

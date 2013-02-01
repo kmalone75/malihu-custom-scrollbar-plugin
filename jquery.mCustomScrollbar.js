@@ -62,7 +62,7 @@ plugin home: http://manos.malihu.gr/jquery-custom-content-scroller
 					var mCustomScrollbarIndex=parseInt($(document).data("mCustomScrollbar-index"));
 					$(document).data("mCustomScrollbar-index",mCustomScrollbarIndex+1);
 				}
-				$this.wrapInner("<div class='mCustomScrollBox' id='mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:relative; height:100%; overflow:hidden; max-width:100%;' />").addClass("mCustomScrollbar _mCS_"+$(document).data("mCustomScrollbar-index"));
+				$this.wrapInner("<div class='mCustomScrollBox' id='mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:relative; height:100%; max-width:100%;' />").addClass("mCustomScrollbar _mCS_"+$(document).data("mCustomScrollbar-index"));
 				var mCustomScrollBox=$this.children(".mCustomScrollBox");
 				if(options.horizontalScroll){
 					mCustomScrollBox.addClass("mCSB_horizontal").wrapInner("<div class='mCSB_h_wrapper _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:relative; left:0; width:999999px;' />");
