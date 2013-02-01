@@ -65,17 +65,17 @@ plugin home: http://manos.malihu.gr/jquery-custom-content-scroller
 				$this.wrapInner("<div class='mCustomScrollBox' id='mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:relative; height:100%; overflow:hidden; max-width:100%;' />").addClass("mCustomScrollbar _mCS_"+$(document).data("mCustomScrollbar-index"));
 				var mCustomScrollBox=$this.children(".mCustomScrollBox");
 				if(options.horizontalScroll){
-					mCustomScrollBox.addClass("mCSB_horizontal").wrapInner("<div class='mCSB_h_wrapper' style='position:relative; left:0; width:999999px;' />");
+					mCustomScrollBox.addClass("mCSB_horizontal").wrapInner("<div class='mCSB_h_wrapper _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:relative; left:0; width:999999px;' />");
 					var mCSB_h_wrapper=mCustomScrollBox.children(".mCSB_h_wrapper");
-					mCSB_h_wrapper.wrapInner("<div class='mCSB_container' style='position:absolute; left:0;' />").children(".mCSB_container").css({"width":mCSB_h_wrapper.children().outerWidth(),"position":"relative"}).unwrap();
+					mCSB_h_wrapper.wrapInner("<div class='mCSB_container _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:absolute; left:0;' />").children(".mCSB_container").css({"width":mCSB_h_wrapper.children().outerWidth(),"position":"relative"}).unwrap();
 				}else{
-					mCustomScrollBox.wrapInner("<div class='mCSB_container' style='position:relative; top:0;' />");
+					mCustomScrollBox.wrapInner("<div class='mCSB_container _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:relative; top:0;' />");
 				}
 				var mCSB_container=mCustomScrollBox.children(".mCSB_container");
 				if($(document).data("mCS-is-touch-device")){
 					mCSB_container.addClass("mCS_touch");
 				}
-				mCSB_container.after("<div class='mCSB_scrollTools' style='position:absolute;'><div class='mCSB_draggerContainer' style='position:relative;'><div class='mCSB_dragger' style='position:absolute;'><div class='mCSB_dragger_bar' style='position:relative;'></div></div><div class='mCSB_draggerRail'></div></div></div>");
+				mCSB_container.after("<div class='mCSB_scrollTools _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:absolute;'><div class='mCSB_draggerContainer _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:relative;'><div class='mCSB_dragger _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:absolute;'><div class='mCSB_dragger_bar _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:relative;'></div></div><div class='mCSB_draggerRail _mCSB_"+$(document).data("mCustomScrollbar-index")+"'></div></div></div>");
 				var mCSB_scrollTools=mCustomScrollBox.children(".mCSB_scrollTools"),
 					mCSB_draggerContainer=mCSB_scrollTools.children(".mCSB_draggerContainer"),
 					mCSB_dragger=mCSB_draggerContainer.children(".mCSB_dragger");
@@ -86,9 +86,9 @@ plugin home: http://manos.malihu.gr/jquery-custom-content-scroller
 				}
 				if(options.scrollButtons.enable){
 					if(options.horizontalScroll){
-						mCSB_scrollTools.prepend("<a class='mCSB_buttonLeft' style='display:block; position:relative;'></a>").append("<a class='mCSB_buttonRight' style='display:block; position:relative;'></a>");
+						mCSB_scrollTools.prepend("<a class='mCSB_buttonLeft _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='display:block; position:relative;'></a>").append("<a class='mCSB_buttonRight _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='display:block; position:relative;'></a>");
 					}else{
-						mCSB_scrollTools.prepend("<a class='mCSB_buttonUp' style='display:block; position:relative;'></a>").append("<a class='mCSB_buttonDown' style='display:block; position:relative;'></a>");
+						mCSB_scrollTools.prepend("<a class='mCSB_buttonUp _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='display:block; position:relative;'></a>").append("<a class='mCSB_buttonDown _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='display:block; position:relative;'></a>");
 					}
 				}
 				/*mCustomScrollBox scrollTop and scrollLeft is always 0 to prevent browser focus scrolling*/
@@ -189,7 +189,7 @@ plugin home: http://manos.malihu.gr/jquery-custom-content-scroller
 					mCSB_onContentResize=setInterval(function(){
 						if(options.horizontalScroll){
 							if(options.advanced.autoExpandHorizontalScroll){
-								mCSB_container.css({"position":"absolute","width":"auto"}).wrap("<div class='mCSB_h_wrapper' style='position:relative; left:0; width:999999px;' />").css({"width":mCSB_container.outerWidth(),"position":"relative"}).unwrap();
+								mCSB_container.css({"position":"absolute","width":"auto"}).wrap("<div class='mCSB_h_wrapper _mCSB_"+$(document).data("mCustomScrollbar-index")+"' style='position:relative; left:0; width:999999px;' />").css({"width":mCSB_container.outerWidth(),"position":"relative"}).unwrap();
 							}
 							var mCSB_containerNewSize=mCSB_container.outerWidth();
 						}else{
@@ -205,17 +205,18 @@ plugin home: http://manos.malihu.gr/jquery-custom-content-scroller
 		},
 		update:function(){
 			var $this=$(this),
-				mCustomScrollBox=$this.children(".mCustomScrollBox"),
-				mCSB_container=mCustomScrollBox.children(".mCSB_container");
+				scollBoxId=$this.find('.mCustomScrollBox').attr('id'),
+				mCustomScrollBox=$this.children("#"+scollBoxId+".mCustomScrollBox"),
+				mCSB_container=mCustomScrollBox.children(".mCSB_container._"+scollBoxId);
 			mCSB_container.removeClass("mCS_no_scrollbar");
 			$this.removeClass("mCS_disabled mCS_destroyed");
 			mCustomScrollBox.scrollTop(0).scrollLeft(0); /*reset scrollTop/scrollLeft to prevent browser focus scrolling*/
-			var mCSB_scrollTools=mCustomScrollBox.children(".mCSB_scrollTools"),
-				mCSB_draggerContainer=mCSB_scrollTools.children(".mCSB_draggerContainer"),
-				mCSB_dragger=mCSB_draggerContainer.children(".mCSB_dragger");
+			var mCSB_scrollTools=mCustomScrollBox.children(".mCSB_scrollTools._"+scollBoxId),
+				mCSB_draggerContainer=mCSB_scrollTools.children(".mCSB_draggerContainer._"+scollBoxId),
+				mCSB_dragger=mCSB_draggerContainer.children(".mCSB_dragger._"+scollBoxId);
 			if($this.data("horizontalScroll")){
-				var mCSB_buttonLeft=mCSB_scrollTools.children(".mCSB_buttonLeft"),
-					mCSB_buttonRight=mCSB_scrollTools.children(".mCSB_buttonRight"),
+				var mCSB_buttonLeft=mCSB_scrollTools.children(".mCSB_buttonLeft._"+scollBoxId),
+					mCSB_buttonRight=mCSB_scrollTools.children(".mCSB_buttonRight._"+scollBoxId),
 					mCustomScrollBoxW=mCustomScrollBox.width();
 				if($this.data("autoExpandHorizontalScroll")){
 					mCSB_container.css({"position":"absolute","width":"auto"}).wrap("<div class='mCSB_h_wrapper' style='position:relative; left:0; width:999999px;' />").css({"width":mCSB_container.outerWidth(),"position":"relative"}).unwrap();
@@ -650,9 +651,10 @@ plugin home: http://manos.malihu.gr/jquery-custom-content-scroller
 		},
 		scroll:function(bypassCallbacks){
 			var $this=$(this),
-				mCSB_dragger=$this.find(".mCSB_dragger"),
-				mCSB_container=$this.find(".mCSB_container"),
-				mCustomScrollBox=$this.find(".mCustomScrollBox");
+				scollBoxId=$this.find('.mCustomScrollBox').attr('id'),
+				mCSB_dragger=$this.find(".mCSB_dragger._"+scollBoxId),
+				mCSB_container=$this.find(".mCSB_container._"+scollBoxId),
+				mCustomScrollBox=$this.find(".mCustomScrollBox._"+scollBoxId);
 			if($this.data("horizontalScroll")){
 				var draggerX=mCSB_dragger.position().left,
 					targX=-draggerX*$this.data("scrollAmount"),
@@ -713,11 +715,12 @@ plugin home: http://manos.malihu.gr/jquery-custom-content-scroller
 			},
 				options=$.extend(defaults,options),
 				$this=$(this),
+				scollBoxId=$this.find('.mCustomScrollBox').attr('id'),
 				scrollToPos,
-				mCustomScrollBox=$this.find(".mCustomScrollBox"),
-				mCSB_container=mCustomScrollBox.children(".mCSB_container"),
-				mCSB_draggerContainer=$this.find(".mCSB_draggerContainer"),
-				mCSB_dragger=mCSB_draggerContainer.children(".mCSB_dragger"),
+				mCustomScrollBox=$this.find(".mCustomScrollBox._"+scollBoxId),
+				mCSB_container=mCustomScrollBox.children(".mCSB_container._"+scollBoxId),
+				mCSB_draggerContainer=$this.find(".mCSB_draggerContainer._"+scollBoxId),
+				mCSB_dragger=mCSB_draggerContainer.children(".mCSB_dragger._"+scollBoxId),
 				targetPos;
 			if(scrollTo || scrollTo===0){
 				if(typeof(scrollTo)==="number"){ /*if integer, scroll by number of pixels*/
@@ -779,8 +782,9 @@ plugin home: http://manos.malihu.gr/jquery-custom-content-scroller
 		},
 		callbacks:function(callback){
 			var $this=$(this),
-				mCustomScrollBox=$this.find(".mCustomScrollBox"),
-				mCSB_container=$this.find(".mCSB_container");
+				scollBoxId=$this.find('.mCustomScrollBox').attr('id'),
+				mCustomScrollBox=$this.find(".mCustomScrollBox._"+scollBoxId),
+				mCSB_container=$this.find(".mCSB_container._"+scollBoxId);
 			switch(callback){
 				/*start scrolling callback*/
 				case "onScrollStart":
@@ -824,10 +828,11 @@ plugin home: http://manos.malihu.gr/jquery-custom-content-scroller
 		},
 		disable:function(resetScroll){
 			var $this=$(this),
-				mCustomScrollBox=$this.children(".mCustomScrollBox"),
-				mCSB_container=mCustomScrollBox.children(".mCSB_container"),
-				mCSB_scrollTools=mCustomScrollBox.children(".mCSB_scrollTools"),
-				mCSB_dragger=mCSB_scrollTools.find(".mCSB_dragger");
+				scollBoxId=$this.find('.mCustomScrollBox').attr('id'),
+				mCustomScrollBox=$this.children(".mCustomScrollBox._"+scollBoxId),
+				mCSB_container=mCustomScrollBox.children(".mCSB_container._"+scollBoxId),
+				mCSB_scrollTools=mCustomScrollBox.children(".mCSB_scrollTools._"+scollBoxId),
+				mCSB_dragger=mCSB_scrollTools.find(".mCSB_dragger._"+scollBoxId);
 			mCustomScrollBox.unbind("mousewheel focusin");
 			if(resetScroll){
 				if($this.data("horizontalScroll")){
@@ -842,7 +847,8 @@ plugin home: http://manos.malihu.gr/jquery-custom-content-scroller
 		},
 		destroy:function(){
 			var $this=$(this),
-				content=$this.find(".mCSB_container").html();
+				scollBoxId=$this.find('.mCustomScrollBox').attr('id'),
+				content=$this.find(".mCSB_container._"+scollBoxId).html();
 			$this.find(".mCustomScrollBox").remove();
 			$this.html(content).removeClass("mCustomScrollbar _mCS_"+$(document).data("mCustomScrollbar-index")).addClass("mCS_destroyed");
 		}
